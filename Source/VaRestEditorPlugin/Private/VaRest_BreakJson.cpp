@@ -53,8 +53,8 @@ public:
 
 				FBPTerminal **Target = Context.NetMap.Find(Pin);
 
-				const FString &FieldName = Pin->PinName;
-				const FString &FieldType = Pin->PinType.PinCategory;
+				const FString &FieldName = Pin->PinName.ToString();
+				const FString &FieldType = Pin->PinType.PinCategory.ToString();
 
 				FBPTerminal* FieldNameTerm = Context.CreateLocalTerminal(ETerminalSpecification::TS_Literal);
 				FieldNameTerm->Type.PinCategory = CompilerContext.GetSchema()->PC_String;
@@ -71,19 +71,19 @@ public:
 
 				bool bIsArray = Pin->PinType.IsArray();
 
-				if (FieldType == CompilerContext.GetSchema()->PC_Boolean)
+				if (FieldType == CompilerContext.GetSchema()->PC_Boolean.ToString())
 				{
 					FunctionName = bIsArray ? TEXT("GetBoolArrayField") : TEXT("GetBoolField");
 				}
-				else if (FieldType == CompilerContext.GetSchema()->PC_Float)
+				else if (FieldType == CompilerContext.GetSchema()->PC_Float.ToString())
 				{
 					FunctionName = bIsArray ? TEXT("GetNumberArrayField") : TEXT("GetNumberField");
 				}
-				else if (FieldType == CompilerContext.GetSchema()->PC_String)
+				else if (FieldType == CompilerContext.GetSchema()->PC_String.ToString())
 				{
 					FunctionName = bIsArray ? TEXT("GetStringArrayField") : TEXT("GetStringField");
 				}
-				else if (FieldType == CompilerContext.GetSchema()->PC_Object)
+				else if (FieldType == CompilerContext.GetSchema()->PC_Object.ToString())
 				{
 					FunctionName = bIsArray ? TEXT("GetObjectArrayField") : TEXT("GetObjectField");
 				}
@@ -256,19 +256,19 @@ void UVaRest_BreakJson::CreateProjectionPins(UEdGraphPin *Source)
 
 		switch ((*it).Type) {
 			case EVaRest_JsonType::JSON_Bool:
-				Type = K2Schema->PC_Boolean;
+				Type = K2Schema->PC_Boolean.ToString();
 				break;
 
 			case EVaRest_JsonType::JSON_Number:
-				Type = K2Schema->PC_Float;
+				Type = K2Schema->PC_Float.ToString();
 				break;
 
 			case EVaRest_JsonType::JSON_String:
-				Type = K2Schema->PC_String;
+				Type = K2Schema->PC_String.ToString();
 				break;
 
 			case EVaRest_JsonType::JSON_Object:
-				Type = K2Schema->PC_Object;
+				Type = K2Schema->PC_Object.ToString();
 				Subtype = Class;
 				break;
 		}
